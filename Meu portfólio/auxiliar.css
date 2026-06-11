@@ -1,0 +1,482 @@
+/* Reset & Variáveis - TEMA DARK NEON */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', 'Segoe UI', Roboto, sans-serif; /* Poppins fica mais moderno */
+}
+
+:root {
+    --primary: #ff4500; /* Laranja Original */
+    --primary-neon: #ff6a00; /* Laranja mais vivo para Neon */
+    --primary-glow: rgba(255, 106, 0, 0.6);
+    
+    /* Novas Cores Dark */
+    --bg-dark: #050509; /* Quase preto, levemente azulado */
+    --bg-card: rgba(20, 20, 30, 0.6); /* Fundo dos cards com transparência */
+    --text-light: #ffffff;
+    --text-gray: #b0b0b0;
+    
+    --transition: all 0.3s ease;
+}
+
+/* Importando fonte moderna */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;800&display=swap');
+
+html {
+    scroll-behavior: smooth; /* Rolagem suave nativa */
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    overflow-x: hidden;
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* Fundo Interativo Vanta.js */
+#vanta-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2; /* Atrás de tudo */
+}
+
+/* Camada de degradê sobre o Vanta para profundidade */
+#vanta-bg::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at center, transparent 0%, var(--bg-dark) 90%);
+}
+
+/* --- CURSOR PERSONALIZADO --- */
+.cursor-dot, .cursor-dot-outline {
+    pointer-events: none; /* Não interfere nos cliques */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    opacity: 0; /* Começa invisível, aparece no JS */
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    z-index: 9999;
+}
+
+.cursor-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--text-light);
+}
+
+.cursor-dot-outline {
+    width: 40px;
+    height: 40px;
+    background-color: var(--primary-glow);
+    border: 1px solid var(--primary-neon);
+    backdrop-filter: blur(2px); /* Efeito massa no cursor */
+    box-shadow: 0 0 15px var(--primary-glow);
+    transition: width 0.2s ease, height 0.2s ease, background-color 0.2s ease;
+}
+
+/* Efeito ao passar o mouse em links */
+body.cursor-hover .cursor-dot-outline {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(255, 69, 0, 0.2);
+    border-color: var(--text-light);
+}
+
+/* Menu Superior (Navbar) - Adaptado para Dark */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 8%; /* Reduzi um pouco o padding */
+    background: rgba(5, 5, 9, 0.7);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255, 69, 0, 0.2);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.navbar .logo {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: var(--text-light);
+}
+
+.navbar .logo span {
+    color: var(--primary-neon);
+    text-shadow: 0 0 10px var(--primary-glow);
+}
+
+.navbar nav a {
+    color: var(--text-gray);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    margin-left: 30px;
+    letter-spacing: 1px;
+    transition: var(--transition);
+    position: relative;
+}
+
+/* Sublinhado Neon no hover */
+.navbar nav a::after {
+    content: '';
+    position: absolute;
+    width: 0; height: 2px;
+    bottom: -5px; left: 0;
+    background-color: var(--primary-neon);
+    box-shadow: 0 0 10px var(--primary-glow);
+    transition: var(--transition);
+}
+
+.navbar nav a:hover {
+    color: var(--text-light);
+}
+
+.navbar nav a:hover::after {
+    width: 100%;
+}
+
+/* Hero Section */
+.hero-container {
+    margin-top: 80px;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 8%;
+    gap: 5%;
+}
+
+.hero-left, .hero-right {
+    flex: 1;
+}
+
+/* Moldura Hexagonal - Ajustada para destacar no dark */
+.hexagon-wrapper {
+    position: relative;
+    width: 320px;
+    height: 360px;
+    margin: 0 auto;
+    filter: drop-shadow(0 0 25px var(--primary-glow));
+    animation: floatHex 4s ease-in-out infinite;
+}
+
+.hexagon {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--primary-neon), #ff8800);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+.hexagon img {
+    width: 96%; /* Borda mais fina */
+    height: 96%;
+    object-fit: cover;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    background: #000; /* Fundo preto interno se a imagem falhar */
+}
+
+/* Camada Traseira de Pulso - Mais forte */
+.hexagon-pulse-layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: 4px solid var(--primary-neon);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    z-index: 1;
+    animation: energyWave 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+    box-shadow: 0 0 20px var(--primary-glow);
+}
+
+/* Textos da Capa */
+.boas-vindas {
+    font-size: 56px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    color: var(--text-light);
+}
+
+#typing-text {
+    color: var(--primary-neon);
+    border-right: 3px solid var(--primary-neon);
+    padding-right: 5px;
+    text-shadow: 0 0 15px var(--primary-glow);
+    animation: blink 0.7s step-end infinite;
+}
+
+.subtitle-box {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.cesar {
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--text-gray);
+}
+
+.cesar span {
+    color: var(--text-light);
+    font-weight: 700;
+    position: relative;
+}
+/* Destaque neon suave no Cesar School */
+.cesar span::after {
+    content: ''; position: absolute; left: 0; bottom: -2px;
+    width: 100%; height: 1px; background: var(--primary-neon);
+    box-shadow: 0 0 8px var(--primary-glow);
+}
+
+/* Botão Neon CTA */
+.btn-neon {
+    display: inline-block;
+    padding: 12px 30px;
+    background: transparent;
+    border: 2px solid var(--primary-neon);
+    color: var(--primary-neon);
+    text-decoration: none;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 4px;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-neon:hover {
+    color: #fff;
+    background: var(--primary-neon);
+    box-shadow: 0 0 25px var(--primary-glow);
+    transform: translateY(-3px);
+}
+
+/* Divisor Frequência */
+.pulse-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 80px 8%;
+    gap: 20px;
+}
+
+.pulse-divider .line {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary-neon), transparent);
+    box-shadow: 0 0 10px var(--primary-glow);
+}
+
+.pulse-divider .title-section {
+    font-size: 28px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--text-light);
+    text-shadow: 0 0 10px rgba(255,255,255,0.5);
+}
+
+/* Seção Sobre Mim */
+.about-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    padding: 0 8% 100px 8%;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.about-col-left, .about-col-right {
+    flex: 1.2;
+    min-width: 320px;
+}
+
+.about-col-center {
+    flex: 0.8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Estilo Glassmorphism para os Cards */
+.glassmorphism {
+    background: var(--bg-card);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 69, 0, 0.15);
+    padding: 35px;
+    border-radius: 12px; /* Cantos mais arredondados ficam melhor com glass */
+    position: relative;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    /* Mantive seu clip-path, mas com radius fica agressivo, decida qual usar. 
+       Se quiser o clip-path, remova o border-radius. Vou comentar o clip-path para testar */
+    /* clip-path: polygon(0 0, 95% 0, 100% 15px, 100% 100%, 5px 100%, 0 95%); */
+    transition: var(--transition);
+}
+
+.glassmorphism:hover {
+    border-color: rgba(255, 69, 0, 0.4);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(255, 69, 0, 0.1);
+}
+
+/* Detalhe Superior Neon */
+.glassmorphism::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 30px;
+    width: 50px;
+    height: 3px;
+    background: var(--primary-neon);
+    box-shadow: 0 0 10px var(--primary-glow);
+    border-radius: 0 0 3px 3px;
+}
+
+.card-tech h3 {
+    font-size: 22px;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-light);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 10px;
+}
+
+.about-col-left p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text-gray);
+}
+
+/* Foto Redonda com Glow intenso */
+.foto-redonda-glow {
+    width: 210px;
+    height: 210px;
+    border-radius: 50%;
+    border: 3px solid rgba(255,255,255,0.1);
+    padding: 8px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 0 30px rgba(255, 69, 0, 0.2);
+    animation: pulseGlow 3s infinite alternate;
+    transition: var(--transition);
+}
+
+.foto-redonda-glow:hover {
+    box-shadow: 0 0 50px var(--primary-glow);
+    border-color: var(--primary-neon);
+}
+
+.foto-redonda-glow img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* Progresso de Habilidades Adaptado */
+.skill-progess {
+    margin-bottom: 20px;
+}
+
+.skill-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-light);
+}
+
+.bar-container {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    height: 8px; /* Mais fina fica mais elegante */
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ff8800, var(--primary-neon));
+    width: 0;
+    border-radius: 4px;
+    box-shadow: 0 0 10px var(--primary-glow);
+    animation: fillBars 2.5s cubic-bezier(0.1, 1, 0.1, 1) forwards;
+}
+
+/* --- KEYFRAMES --- */
+@keyframes floatHex {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(1deg); }
+}
+
+@keyframes energyWave {
+    0% { transform: scale(1); opacity: 0.8; filter: blur(0px); }
+    100% { transform: scale(1.2); opacity: 0; filter: blur(10px); }
+}
+
+@keyframes pulseGlow {
+    from { box-shadow: 0 0 20px rgba(255, 69, 0, 0.2); border-color: rgba(255,255,255,0.1); }
+    to { box-shadow: 0 0 40px rgba(255, 69, 0, 0.4); border-color: rgba(255, 69, 0, 0.3); }
+}
+
+@keyframes blink {
+    from, to { border-color: transparent }
+    50% { border-color: var(--primary-neon); }
+}
+
+/* fillBars usa a variável --target-width definida no HTML inline */
+@keyframes fillBars {
+    from { width: 0; }
+    to { width: var(--target-width); }
+}
+
+/* Responsividade */
+@media (max-width: 900px) {
+    * { cursor: auto !important; } /* Volta cursor padrão em touch */
+    .cursor-dot, .cursor-dot-outline { display: none; }
+    
+    .boas-vindas { font-size: 40px; }
+    .hero-container { margin-top: 60px; padding-bottom: 50px;}
+    .hero-container, .about-container { flex-direction: column; text-align: center; }
+    .hero-left, .hero-right, .about-col-left, .about-col-right { width: 100%; }
+    .subtitle-box { justify-content: center; flex-direction: column; gap: 5px;}
+    .hexagon-wrapper { width: 280px; height: 310px; margin-bottom: 40px; }
+    .about-col-center { order: -1; margin-bottom: 40px; }
+    .glassmorphism { padding: 25px; }
+}
+
+/* Estilo para o efeito de decodificação de texto */
+.cesar {
+    min-height: 40px; /* Mantém uma altura fixa para o texto não empurrar o botão de baixo */
+    display: inline-block;
+}
+
+/* Cor neon para os caracteres que estão embaralhados */
+.scrambled {
+    color: var(--primary-neon);
+    text-shadow: 0 0 8px var(--primary-glow);
+    font-family: 'Courier New', Courier, monospace; /* Estilo terminal hacker */
+}
